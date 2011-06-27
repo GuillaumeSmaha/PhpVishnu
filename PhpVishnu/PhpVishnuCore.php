@@ -87,7 +87,7 @@ abstract class PhpVishnuCore
 		if(isset(self::$_t_extend[get_class($this)]))
 		{
 			if(count(self::$_t_extend[get_class($this)]) < func_num_args())
-				throw new PhpVishnu_Exception('There more parameters (number:'.func_num_args().') than parents class ('.count(self::$_t_extend[get_class($this)]).' parents)');
+				throw new PhpVishnu_Exception('class '.get_class($this).' : There more parameters (number:'.func_num_args().') than parents class ('.count(self::$_t_extend[get_class($this)]).' parents)');
 		}
 			
 		$args = func_get_args(); // Param PhpVishnu
@@ -133,7 +133,7 @@ abstract class PhpVishnuCore
 		if(isset(self::$_t_singleton[get_called_class()]) && self::$_t_singleton[get_called_class()])
 		{
 			if(isset(self::$_t_singleton_instance[get_called_class()]))
-				throw new PhpVishnu_Exception('Singleton::getSingleton() : Singleton "'.get_called_class().'" is already created !');
+				throw new PhpVishnu_Exception('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is already created !');
 			
 			self::$_t_singleton_instance[get_called_class()] = $this->childOfChildren();
 		}
@@ -177,16 +177,16 @@ abstract class PhpVishnuCore
 						break;
 						
 					default :
-						throw new PhpVishnu_Exception('Method "' . $methodName . '" not exists');
+						throw new PhpVishnu_Exception('class '.get_class($this).' : Method "' . $methodName . '" not exists');
 						break;
 				}
 			}
 			if($try)
-				throw new PhpVishnu_Exception('Method "' . $methodName . '" not exists');
+				throw new PhpVishnu_Exception('class '.get_class($this).' : Method "' . $methodName . '" not exists');
 		}
         else
         {
-			throw new PhpVishnu_Exception('Method "' . $methodName . '" not exists');
+			throw new PhpVishnu_Exception('class '.get_class($this).' : Method "' . $methodName . '" not exists');
 		}     
 	}
 	
@@ -205,7 +205,7 @@ abstract class PhpVishnuCore
 			return forward_static_call_array(array($className, $methodName), $args);
 		}
 		else
-			throw new PhpVishnu_Exception('Static Method "' . $methodName . '" not exists');
+			throw new PhpVishnu_Exception('class '.get_class($this).' : Static Method "' . $methodName . '" not exists');
 	}
 	
 	
@@ -221,7 +221,7 @@ abstract class PhpVishnuCore
 		$access = $this->getPropertyAccess($propertyName);
 		if($access != 'public')
 		{
-			throw new PhpVishnu_Exception('Property '.$propertyName.' is "' . $access . '" in the class '.get_called_class());
+			throw new PhpVishnu_Exception('class '.get_class($this).' : Property '.$propertyName.' is "' . $access . '" in the class '.get_called_class());
 		}
 		
 		return $this->get($propertyName);
@@ -240,10 +240,10 @@ abstract class PhpVishnuCore
 		$access = $this->getPropertyAccess($propertyName);
 		
 		if($access == null)
-			throw new PhpVishnu_Exception('Property '.$propertyName.' doesn\'t exist !');
+			throw new PhpVishnu_Exception('class '.get_class($this).' : Property '.$propertyName.' doesn\'t exist !');
 			
 		if($access != 'public')
-			throw new PhpVishnu_Exception('Property '.$propertyName.' is "' . $access . '" in the class '.get_called_class());
+			throw new PhpVishnu_Exception('class '.get_class($this).' : Property '.$propertyName.' is "' . $access . '" in the class '.get_called_class());
 		
 		return $this->set($propertyName, $value);
 	}
@@ -270,18 +270,21 @@ abstract class PhpVishnuCore
 		}
 		else
 		{
+/*
 			if($this->$property == null)
 			{
-				throw new PhpVishnu_Exception('Property "' . $property . '" is private in '.get_class($this));
+				throw new PhpVishnu_Exception('class '.get_class($this).' : Property "' . $property . '" is null or private in '.get_class($this));
 			}
 			else
 			{
 				return $this->$property;
 			}
+*/
+			return $this->$property;
 		}		
 		
 		if($value == null && $__noException == false)
-			throw new PhpVishnu_Exception('Property "' . $property . '" not exists');
+			throw new PhpVishnu_Exception('class '.get_class($this).' : Property "' . $property . '" not exists');
 			
 		return null;
     }
@@ -312,7 +315,7 @@ abstract class PhpVishnuCore
 		}		
 		
 		if($objectExec == null)
-			throw new PhpVishnu_Exception('Property "' . $property . '" not exists');
+			throw new PhpVishnu_Exception('class '.get_class($this).' : Property "' . $property . '" not exists');
     }
 	
     /**
@@ -329,7 +332,7 @@ abstract class PhpVishnuCore
         $argc = count($args);
         if ($argc < $min || $argc > $max)
 		{
-            throw new PhpVishnu_Exception('Method ' . $methodName . ' needs minimaly ' . $min . ' and maximaly ' . $max . ' arguments. ' . $argc . ' arguments given.');
+            throw new PhpVishnu_Exception('class '.get_class($this).' : Method ' . $methodName . ' needs minimaly ' . $min . ' and maximaly ' . $max . ' arguments. ' . $argc . ' arguments given.');
         }
     }
     
@@ -337,7 +340,7 @@ abstract class PhpVishnuCore
     public function getPropertyAccess($propertyName)
     {
 		$text = print_r($this, true);
-		if(preg_match("#\[($propertyName)(\:(\w+)|\:\w\:(\w+))?\]#", $text, $matches))
+		if(preg_match("#\[($propertyName)(\:(\w+)|\:(\w+)\:(\w+))?\]#", $text, $matches))
 		{
 			if(count($matches) > 2)
 				return $matches[count($matches)-1];
@@ -463,11 +466,11 @@ abstract class PhpVishnuCore
     public static function getSingleton()
     {
 		if(!isset(self::$_t_singleton[get_called_class()]) || !self::$_t_singleton[get_called_class()])
-			throw new PhpVishnu_Exception('Singleton::getSingleton() : Singleton "'.get_called_class().'" is not a class singleton !');
+			throw new PhpVishnu_Exception('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is not a class singleton !');
 			
         if (!isset(self::$_t_singleton_instance[get_called_class()]))
         {
-            throw new PhpVishnu_Exception('Singleton::getSingleton() : Singleton "'.get_called_class().'" is not created !');
+            throw new PhpVishnu_Exception('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is not created !');
         }
         
         return self::$_t_singleton_instance[get_called_class()]->childOfChildren();
@@ -482,7 +485,7 @@ abstract class PhpVishnuCore
     public static function createSingleton()
     {
 		if(!isset(self::$_t_singleton[get_called_class()]) || !self::$_t_singleton[get_called_class()])
-			throw new PhpVishnu_Exception('Singleton::getSingleton() : Singleton "'.get_called_class().'" is not a class singleton !');
+			throw new PhpVishnu_Exception('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is not a class singleton !');
 			
         if (!isset(self::$_t_singleton_instance[get_called_class()]))
         {
@@ -505,7 +508,7 @@ abstract class PhpVishnuCore
 			eval('self::$_t_singleton_instance[get_called_class()] = new $className('.$paramClass.');');
         }
         else
-			throw new PhpVishnu_Exception('Singleton::getSingleton() : Singleton "'.get_called_class().'" is already created !');
+			throw new PhpVishnu_Exception('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is already created !');
     }
 
     /**
@@ -516,7 +519,7 @@ abstract class PhpVishnuCore
     public static function destroySingleton()
     {
 		if(!isset(self::$_t_singleton[get_called_class()]) || !self::$_t_singleton[get_called_class()])
-			throw new PhpVishnu_Exception('Singleton::getSingleton() : Singleton "'.get_called_class().'" is not a class singleton !');
+			throw new PhpVishnu_Exception('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is not a class singleton !');
 			
         unset(self::$_t_singleton_instance[get_called_class()]);
     }
