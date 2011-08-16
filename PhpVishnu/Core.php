@@ -2,7 +2,7 @@
 /*! 
  * LICENSE
  * 
- *  Copyright (c) 2005-2011 Guillaume Smaha.
+ *  Copyright (c) 2011 Guillaume Smaha.
  *
  *  PhpVishnu is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
  *  <http://www.gnu.org/licenses/>.
  * 
  * \package 	PhpVishnu
- * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
+ * \copyright	(C) Copyright 2011 Guillaume Smaha.
  * \license		http://www.gnu.org/licenses/ LGPL3
  * \brief		PhpVishnu is a tool to permit the multiple-inheritance in PHP.
  */
@@ -31,7 +31,7 @@ require_once 'PhpVishnu/Exception.php';
  * \brief PhpVishnuCore : This file is a part of PhpVishnu.
  *
  * \class		PhpVishnuCore "PhpVishnu/Core.php"
- * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
+ * \copyright	(C) Copyright 2011 Guillaume Smaha.
  * \license		http://www.gnu.org/licenses/ LGPL3
  */
 abstract class PhpVishnuCore

@@ -2,7 +2,7 @@
 /*!
  * LICENSE
  * 
- *  Copyright (c) 2005-2011 Guillaume Smaha.
+ *  Copyright (c) 2011 Guillaume Smaha.
  *
  *  PhpVishnu is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
  *  <http://www.gnu.org/licenses/>.
  * 
  * \package 	PhpVishnu_Example_Simple
- * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
+ * \copyright	(C) Copyright 2011 Guillaume Smaha.
  * \license		http://www.gnu.org/licenses/ LGPL3
  * \brief		PhpVishnu_Example_Simple is an using example of PhpVishnu.
  */
@@ -35,7 +35,7 @@ require_once 'C.php';
  * \brief This file is an example and a part of PhpVishnu.
  *
  * \class		A "A.php"
- * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
+ * \copyright	(C) Copyright 2011 Guillaume Smaha.
  * \license		http://www.gnu.org/licenses/ LGPL3
  */
 class A extends PhpVishnuCore
