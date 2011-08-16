@@ -55,10 +55,9 @@ class Doctoral extends PhpVishnuCore
 		parent::__construct($name, $name);
 	}
 
-
-	public function work()
+	public function search()
 	{
-		echo $this->_name." works on the PhpVishnu documentation.<br/>\n";
+		echo $this->_name." searchs on the PhpVishnu documentation.<br/>\n";
 	}
 }
 

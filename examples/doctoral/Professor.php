@@ -52,6 +52,10 @@ class Professor extends PhpVishnuCore
 		$this->_name = $name;
 	}
 
+	public function work()
+	{
+		echo $this->_name." works on the PhpVishnu documentation (Professor).<br/>\n";
+	}
 
 	public function teach()
 	{

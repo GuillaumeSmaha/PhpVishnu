@@ -51,7 +51,11 @@ class Student extends PhpVishnuCore
 	{
 		$this->_name = $name;
 	}
-
+	
+	public function work()
+	{
+		echo $this->_name." works on the PhpVishnu documentation (Student).<br/>\n";
+	}
 
 	public function learn()
 	{

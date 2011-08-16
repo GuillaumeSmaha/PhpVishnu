@@ -295,18 +295,34 @@ abstract class PhpVishnuCore
      */
     public function set($property, $value)
     {
+		$listExclude = array();
 		$objectExec = null;
 		if (!property_exists($this, $property))
-		{
-			$objectExec = $this->parentObjectContainingProperty($property);
-			if($objectExec != null)
+		{			
+			$objectExecInit = $this->parentObjectContainingProperty($property, $listExclude);
+			$objectExec = $objectExecInit;
+			while($objectExec != null)
 			{
 				$objectExec->$property = $value;
+				array_push($listExclude, $objectExec);
+				$objectExec = $this->parentObjectContainingProperty($property, $listExclude);
+			}
+			
+			if($objectExecInit != null)
+			{
 				return $objectExec->$property;
 			}
 		}
 		else
 		{
+			$objectExec = $this->parentObjectContainingProperty($property, $listExclude);
+			while($objectExec != null)
+			{
+				$objectExec->$property = $value;
+				array_push($listExclude, $objectExec);
+				$objectExec = $this->parentObjectContainingProperty($property, $listExclude);
+			}
+			
 			$this->$property = $value;
 			return $this->$property;
 		}		
@@ -424,20 +440,24 @@ abstract class PhpVishnuCore
      * \brief Return the object contains the property
      *
      * \param string $propertyName Property name
+     * \param array $_excludeObject List of objects to exclude of the search.
      */
-    public function parentObjectContainingProperty($propertyName)
+    public function parentObjectContainingProperty($propertyName, $_excludeObject = null)
     {
 		foreach($this->_t_extend_instances as &$object)
 		{
-			if(property_exists($object, $propertyName))
+			if($_excludeObject == null || !in_array($object, $_excludeObject))
 			{
-				return $object;
-			}
-			else
-			{
-				$obj = &$object->parentObjectContainingProperty($propertyName);
-				if($obj != null)
-					return $obj;
+				if(property_exists($object, $propertyName))
+				{
+					return $object;
+				}
+				else
+				{
+					$obj = &$object->parentObjectContainingProperty($propertyName, $_excludeObject);
+					if($obj != null)
+						return $obj;
+				}			
 			}			
 		}
 		

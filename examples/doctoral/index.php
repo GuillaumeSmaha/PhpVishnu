@@ -43,9 +43,19 @@ $doctoral = new Doctoral('A doctoral');
 
 
 $student->learn();
+$student->work();
 
+echo "<br/>\n";
 $professor->teach();
+$professor->work();
 
+echo "<br/>\n";
+$doctoral->learn();
+$doctoral->teach();
+$doctoral->work();
+
+echo "<br/>\n";
+$doctoral->setName('John');
 $doctoral->learn();
 $doctoral->teach();
 
