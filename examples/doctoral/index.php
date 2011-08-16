@@ -18,10 +18,10 @@
  *  along with PhpVishnu; see the file COPYING3. If not see
  *  <http://www.gnu.org/licenses/>.
  * 
- * \package 	PhpVishnu_Example_Simple
+ * \package 	PhpVishnu_Example_Doctoral
  * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
  * \license		http://www.gnu.org/licenses/ LGPL3
- * \brief		PhpVishnu_Example_Simple is an using example of PhpVishnu.
+ * \brief		PhpVishnu_Example_Doctoral is an using example of PhpVishnu.
  */
 
 /*!
