@@ -18,46 +18,36 @@
  *  along with PhpVishnu; see the file COPYING3. If not see
  *  <http://www.gnu.org/licenses/>.
  * 
- * \package 	PhpVishnu_Test
+ * \package 	PhpVishnu_Example_Simple
  * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
  * \license		http://www.gnu.org/licenses/ LGPL3
- * \brief		PhpVishnu_Test is an using example of PhpVishnu.
+ * \brief		PhpVishnu_Example_Simple is an using example of PhpVishnu.
  */
-
-require_once 'PhpVishnu/Exception.php';
-require_once 'PhpVishnu/Core.php';
-require_once 'test/B.php';
-require_once 'test/C.php';
 
 /*!
- * \file A.php
+ * \file index.php
  * \brief This file is an example and a part of PhpVishnu.
  *
- * \class		A "test/A.php"
  * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
  * \license		http://www.gnu.org/licenses/ LGPL3
  */
-class A extends PhpVishnuCore
-{
-	private $_a_private = 'private class A';
-	
-	protected $_a_protected = 'protected class A';
 
-	public $_a_public = 'public class A';
-	
-	
-	public function __construct()
-	{
-		parent::__construct('protected value for B from A', null);
-		//parent::__construct('protected value for B from A');
-		//parent::__construct(array('protected value for B from A'));
-	}
-}
+set_include_path(get_include_path() . PATH_SEPARATOR . '../../');
+require_once 'A.php';
 
-A::defineParentClass('B', 'C');
 
-A::defineGenerateGetterSetter(true);
+A::createSingleton();
 
-A::defineClassSingleton(true);
 
-?>
+echo "A::getSingleton()->_c_public = ".A::getSingleton()->_c_public."<br/><br/>\n\n";
+echo "A::getSingleton()->_b_public = ".A::getSingleton()->_b_public."<br/><br/>\n\n";
+echo "A::getSingleton()->_a_public = ".A::getSingleton()->_a_public."<br/><br/>\n\n";
+
+
+
+echo "A::getSingleton()->getCProtected() = ".A::getSingleton()->getCProtected()."<br/><br/>\n\n";
+echo "A::getSingleton()->getBProtected() = ".A::getSingleton()->getBProtected()."<br/><br/>\n\n";
+echo "A::getSingleton()->getAProtected() = ".A::getSingleton()->getAProtected()."<br/><br/>\n\n";
+
+echo "print_r(A::getSingleton()) : <br/>\n";
+print_r(A::getSingleton());

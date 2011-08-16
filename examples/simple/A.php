@@ -18,35 +18,47 @@
  *  along with PhpVishnu; see the file COPYING3. If not see
  *  <http://www.gnu.org/licenses/>.
  * 
- * \package 	PhpVishnu_Test
+ * \package 	PhpVishnu_Example_Simple
  * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
  * \license		http://www.gnu.org/licenses/ LGPL3
- * \brief		PhpVishnu_Test is an using example of PhpVishnu.
+ * \brief		PhpVishnu_Example_Simple is an using example of PhpVishnu.
  */
 
+set_include_path(get_include_path() . PATH_SEPARATOR . '../../');
 require_once 'PhpVishnu/Exception.php';
 require_once 'PhpVishnu/Core.php';
+require_once 'B.php';
+require_once 'C.php';
 
 /*!
- * \file B.php
+ * \file A.php
  * \brief This file is an example and a part of PhpVishnu.
  *
- * \class		B "test/B.php"
+ * \class		A "A.php"
  * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
  * \license		http://www.gnu.org/licenses/ LGPL3
  */
-class B extends PhpVishnuCore
+class A extends PhpVishnuCore
 {
-	private $_b_private = 'private class B';
+	private $_a_private = 'private class A';
 	
-	protected $_b_protected = 'protected class B';
+	protected $_a_protected = 'protected class A';
 
-	public $_b_public = 'public class B';
+	public $_a_public = 'public class A';
 	
-	function __construct($protectedValue)
+	
+	public function __construct()
 	{
-		$this->_b_protected = $protectedValue;
+		parent::__construct('protected value for B from A', null);
+		//parent::__construct('protected value for B from A');
+		//parent::__construct(array('protected value for B from A'));
 	}
 }
+
+A::defineParentClass('B', 'C');
+
+A::defineGenerateGetterSetter(true);
+
+A::defineClassSingleton(true);
 
 ?>
