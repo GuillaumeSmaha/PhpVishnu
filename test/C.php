@@ -1,11 +1,8 @@
 <?php
-/**
- * PhpVishnu Framework
- *
+/*!
  * LICENSE
  * 
- *  (C) Copyright 2011 Guillaume Smaha
- *  This A.php file is part of PhpVishnu.
+ *  Copyright (c) 2005-2011 Guillaume Smaha.
  *
  *  PhpVishnu is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as
@@ -20,23 +17,23 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with PhpVishnu; see the file COPYING3. If not see
  *  <http://www.gnu.org/licenses/>.
- *
- * @category   PhpVishnu
- * @package    PhpVishnu_Test
- * @copyright  Copyright (c) 2005-2011 PhpVishnu
- * @license    http://www.gnu.org/licenses/ LGPL3
+ * 
+ * \package 	PhpVishnu_Test
+ * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
+ * \license		http://www.gnu.org/licenses/ LGPL3
+ * \brief		PhpVishnu_Test is an using example of PhpVishnu.
  */
 
 require_once 'PhpVishnu/Exception.php';
-require_once 'PhpVishnu/PhpVishnuCore.php';
+require_once 'PhpVishnu/Core.php';
 
-/**
- * C
+/*!
+ * \file C.php
+ * \brief This file is an example and a part of PhpVishnu.
  *
- * @category   PhpVishnu
- * @package    PhpVishnu_Test
- * @copyright  Copyright (c) 2005-2011 PhpVishnu
- * @license    http://www.gnu.org/licenses/ LGPL3
+ * \class		C "test/C.php"
+ * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
+ * \license		http://www.gnu.org/licenses/ LGPL3
  */
 class C extends PhpVishnuCore
 {

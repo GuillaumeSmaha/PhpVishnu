@@ -1,11 +1,8 @@
 <?php
-/**
- * PhpVishnu Framework
- *
+/*!
  * LICENSE
  * 
- *  (C) Copyright 2011 Guillaume Smaha
- *  This Core/Exception.php file is part of PhpVishnu.
+ *  Copyright (c) 2005-2011 Guillaume Smaha.
  *
  *  PhpVishnu is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as
@@ -20,21 +17,21 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with PhpVishnu; see the file COPYING3. If not see
  *  <http://www.gnu.org/licenses/>.
- *
- * @category   PhpVishnu
- * @package    PhpVishnu_Core
- * @copyright  Copyright (c) 2005-2011 PhpVishnu
- * @license    http://www.gnu.org/licenses/ LGPL3
+ * 
+ * \package 	PhpVishnu
+ * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
+ * \license		http://www.gnu.org/licenses/ LGPL3
+ * \brief		PhpVishnu is a tool to permit the multiple-inheritance in PHP.
  */
 
-/**
- * Exception for Core component.
+/*!
+ * \file Exception.php
+ * \brief This file is a part of PhpVishnu. Exception for Core component.
  *
- * @category   PhpVishnu
- * @package    PhpVishnu_Core
- * @copyright  Copyright (c) 2005-2011 PhpVishnu
- * @license    http://www.gnu.org/licenses/ LGPL3
+ * \class		PhpVishnuException "PhpVishnu/Exception.php"
+ * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
+ * \license		http://www.gnu.org/licenses/ LGPL3
  */
-class PhpVishnu_Exception extends Exception
+class PhpVishnuException extends Exception
 {
 }

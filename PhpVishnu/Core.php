@@ -1,11 +1,8 @@
 <?php
-/**
- * PhpVishnu Framework
- *
+/*! 
  * LICENSE
  * 
- *  (C) Copyright 2011 Guillaume Smaha
- *  This PhpVishnu/PhpVishnuCore.php file is part of PhpVishnu.
+ *  Copyright (c) 2005-2011 Guillaume Smaha.
  *
  *  PhpVishnu is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as
@@ -20,74 +17,71 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with PhpVishnu; see the file COPYING3. If not see
  *  <http://www.gnu.org/licenses/>.
- *
- * @category   PhpVishnu
- * @package    PhpVishnu_Core
- * @copyright  Copyright (c) 2005-2011 PhpVishnu
- * @license    http://www.gnu.org/licenses/ LGPL3
+ * 
+ * \package 	PhpVishnu
+ * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
+ * \license		http://www.gnu.org/licenses/ LGPL3
+ * \brief		PhpVishnu is a tool to permit the multiple-inheritance in PHP.
  */
 
 require_once 'PhpVishnu/Exception.php';
 
-/**
- * PhpVishnuCore
+/*!
+ * \file Core.php
+ * \brief PhpVishnuCore : This file is a part of PhpVishnu.
  *
- * @category   PhpVishnu
- * @package    PhpVishnu_Core
- * @copyright  Copyright (c) 2005-2011 PhpVishnu
- * @license    http://www.gnu.org/licenses/ LGPL3
+ * \class		PhpVishnuCore "PhpVishnu/Core.php"
+ * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
+ * \license		http://www.gnu.org/licenses/ LGPL3
  */
 abstract class PhpVishnuCore
 {
-	/**
-	 * List of parents for all class
-	 *
-	 * @var array
+	/*!
+	 * \brief List of parents for all class
 	 */
 	static private $_t_extend = array();
-	/**
-	 * List of boolean defining if the getter/setter is generate automatically
-	 *
-	 * @var array
+	
+	/*!
+	 * \brief List of boolean defining if the getter/setter is generate automatically
 	 */
     static private $_t_generate_gsetter = array();
-	/**
-	 * List of boolean defining if the class is a singleton
-	 *
-	 * @var array
+    
+	/*!
+	 * \brief List of boolean defining if the class is a singleton
 	 */
-    static public $_t_singleton = array();
-	/**
-	 * List of singleton
-	 *
-	 * @var array
+    static private $_t_singleton = array();
+    
+	/*!
+	 * \brief List of singleton
 	 */
-    static public $_t_singleton_instance = array();
-	/**
-	 * List of instances of the class
-	 *
-	 * @var array
+    static private $_t_singleton_instance = array();
+    
+	/*!
+	 * \brief List of instances of the class
 	 */
     private $_t_extend_instances = array();    
-	/**
-	 * child of the class
-	 *
-	 * @var array
+    
+	/*!
+	 * \brief Child of the class
 	 */
     private $_child = null;
 	
-    /**
-     * Constructor
-     *
-     * @param Integer $id
-     * @throws PhpVishnu_Exception
+    /*!
+     * \brief Constructor
+     * 	The parents' values for their contructor or an array containing the values.\n
+     *	These parameters is kind of Mixed or Array of mixed.\n\n
+     * 	Using example for a class A having 2 parents B and C :\n
+     * 		- parent::__construct('value for B from A', null);\n
+	 *		- parent::__construct('value for B from A');\n
+	 *		- parent::__construct(array('value for B from A'));\n
+     * \throws PhpVishnuException
      */
 	public function __construct()
 	{
 		if(isset(self::$_t_extend[get_class($this)]))
 		{
 			if(count(self::$_t_extend[get_class($this)]) < func_num_args())
-				throw new PhpVishnu_Exception('class '.get_class($this).' : There more parameters (number:'.func_num_args().') than parents class ('.count(self::$_t_extend[get_class($this)]).' parents)');
+				throw new PhpVishnuException('class '.get_class($this).' : There more parameters (number:'.func_num_args().') than parents class ('.count(self::$_t_extend[get_class($this)]).' parents)');
 		}
 			
 		$args = func_get_args(); // Param PhpVishnu
@@ -133,18 +127,18 @@ abstract class PhpVishnuCore
 		if(isset(self::$_t_singleton[get_called_class()]) && self::$_t_singleton[get_called_class()])
 		{
 			if(isset(self::$_t_singleton_instance[get_called_class()]))
-				throw new PhpVishnu_Exception('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is already created !');
+				throw new PhpVishnuException('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is already created !');
 			
 			self::$_t_singleton_instance[get_called_class()] = $this->childOfChildren();
 		}
 	}
 	
-    /**
-     * Magic method to call methods
+    /*!
+     * \brief Magic method to call methods and manage the dynamic getters/setters
      *
-     * @param string $methodName Method name
-     * @param array $args Array of arguments
-     * @throws PhpVishnu_Exception
+     * \param string $methodName Method name
+     * \param array $args Array of arguments
+     * \throws PhpVishnuException
      */
 	public function __call($methodName, $args)
     {		
@@ -177,25 +171,25 @@ abstract class PhpVishnuCore
 						break;
 						
 					default :
-						throw new PhpVishnu_Exception('class '.get_class($this).' : Method "' . $methodName . '" not exists');
+						throw new PhpVishnuException('class '.get_class($this).' : Method "' . $methodName . '" not exists');
 						break;
 				}
 			}
 			if($try)
-				throw new PhpVishnu_Exception('class '.get_class($this).' : Method "' . $methodName . '" not exists');
+				throw new PhpVishnuException('class '.get_class($this).' : Method "' . $methodName . '" not exists');
 		}
         else
         {
-			throw new PhpVishnu_Exception('class '.get_class($this).' : Method "' . $methodName . '" not exists');
+			throw new PhpVishnuException('class '.get_class($this).' : Method "' . $methodName . '" not exists');
 		}     
 	}
 	
-    /**
-     * Magic method to call static methods
+    /*!
+     * \brief Magic method to call static methods
      *
-     * @param string $methodName Static method name
-     * @param array $args Array of arguments
-     * @throws PhpVishnu_Exception
+     * \param string $methodName Static method name
+     * \param array $args Array of arguments
+     * \throws PhpVishnuException
      */
 	static public function __callStatic($methodName, $args)
     {
@@ -205,23 +199,23 @@ abstract class PhpVishnuCore
 			return forward_static_call_array(array($className, $methodName), $args);
 		}
 		else
-			throw new PhpVishnu_Exception('class '.get_class($this).' : Static Method "' . $methodName . '" not exists');
+			throw new PhpVishnuException('class '.get_class($this).' : Static Method "' . $methodName . '" not exists');
 	}
 	
 	
 	
-    /**
-     * Magic method to call the basic getter
+    /*!
+     * \brief Magic method to call the basic getter
      *
-     * @param string $propertyName Property name
-     * @throws PhpVishnu_Exception
+     * \param string $propertyName Property name
+     * \throws PhpVishnuException
      */
     public function __get($propertyName)
     {
 		$access = $this->getPropertyAccess($propertyName);
 		if($access != 'public')
 		{
-			throw new PhpVishnu_Exception('class '.get_class($this).' : Property '.$propertyName.' is "' . $access . '" in the class '.get_called_class());
+			throw new PhpVishnuException('class '.get_class($this).' : Property '.$propertyName.' is "' . $access . '" in the class '.get_called_class());
 		}
 		
 		return $this->get($propertyName);
@@ -229,30 +223,33 @@ abstract class PhpVishnuCore
 	
 	
 	
-    /**
-     * Magic method to call the basic setter
+    /*!
+     * \brief Magic method to call the basic setter
      *
-     * @param string $propertyName Property name
-     * @throws PhpVishnu_Exception
+     * \param string $propertyName Property name
+     * \param Mixed $value Value to set
+     * \throws PhpVishnuException
      */
     public function __set($propertyName, $value)
     {
 		$access = $this->getPropertyAccess($propertyName);
 		
 		if($access == null)
-			throw new PhpVishnu_Exception('class '.get_class($this).' : Property '.$propertyName.' doesn\'t exist !');
+			throw new PhpVishnuException('class '.get_class($this).' : Property '.$propertyName.' doesn\'t exist !');
 			
 		if($access != 'public')
-			throw new PhpVishnu_Exception('class '.get_class($this).' : Property '.$propertyName.' is "' . $access . '" in the class '.get_called_class());
+			throw new PhpVishnuException('class '.get_class($this).' : Property '.$propertyName.' is "' . $access . '" in the class '.get_called_class());
 		
 		return $this->set($propertyName, $value);
 	}
 	
-    /**
-     * Generic method to get a property value
+    /*!
+     * \brief Generic method to get a property value
      *
-     * @param string $property Property name
-     * @return Property value
+     * \param string $property Property name
+     * \param bool $__noException Define if the value is null then return an exception.
+     * \throws PhpVishnuException
+     * \return Property value
      */
     public function get($property, $__noException = false)
     {
@@ -273,7 +270,7 @@ abstract class PhpVishnuCore
 /*
 			if($this->$property == null)
 			{
-				throw new PhpVishnu_Exception('class '.get_class($this).' : Property "' . $property . '" is null or private in '.get_class($this));
+				throw new PhpVishnuException('class '.get_class($this).' : Property "' . $property . '" is null or private in '.get_class($this));
 			}
 			else
 			{
@@ -284,17 +281,17 @@ abstract class PhpVishnuCore
 		}		
 		
 		if($value == null && $__noException == false)
-			throw new PhpVishnu_Exception('class '.get_class($this).' : Property "' . $property . '" not exists');
+			throw new PhpVishnuException('class '.get_class($this).' : Property "' . $property . '" not exists');
 			
 		return null;
     }
 
-    /**
-     * Generic method to set a property
+    /*!
+     * \brief Generic method to set a property
      *
-     * @param string $property Property name
-     * @param array $value Value to set
-     * @return Property value
+     * \param string $property Property name
+     * \param array $value Value to set
+     * \return Property value
      */
     public function set($property, $value)
     {
@@ -315,29 +312,36 @@ abstract class PhpVishnuCore
 		}		
 		
 		if($objectExec == null)
-			throw new PhpVishnu_Exception('class '.get_class($this).' : Property "' . $property . '" not exists');
+			throw new PhpVishnuException('class '.get_class($this).' : Property "' . $property . '" not exists');
     }
 	
-    /**
-     * Checks if the number of arguments is correct
+    /*!
+     * \brief Checks if the number of arguments is correct else throw an exception.
      *
-     * @param array $args
-     * @param integer $min Minimum arguments
-     * @param integer $max Maximum arguments
-     * @param string $max Arguments name
-     * @throws PhpVishnu_Exception
+     * \param array $args An array containing the arguments
+     * \param integer $min The minimum number of arguments
+     * \param integer $max The maximum number of arguments
+     * \param string $methodName Method name
+     * \throws PhpVishnuException
      */
     protected function checkArguments(array $args, $min, $max, $methodName)
     {		
         $argc = count($args);
         if ($argc < $min || $argc > $max)
 		{
-            throw new PhpVishnu_Exception('class '.get_class($this).' : Method ' . $methodName . ' needs minimaly ' . $min . ' and maximaly ' . $max . ' arguments. ' . $argc . ' arguments given.');
+            throw new PhpVishnuException('class '.get_class($this).' : Method ' . $methodName . ' needs minimally ' . $min . ' and maximally ' . $max . ' arguments. ' . $argc . ' arguments given.');
         }
     }
     
     
-    public function getPropertyAccess($propertyName)
+    /*!
+     * \brief Return the access for a giving property.
+     *
+     * \param string $propertyName Property name
+     * 
+     * \return Acces type (public, protected, private)
+     */
+    protected function getPropertyAccess($propertyName)
     {
 		$text = print_r($this, true);
 		if(preg_match("#\[($propertyName)(\:(\w+)|\:(\w+)\:(\w+))?\]#", $text, $matches))
@@ -361,11 +365,10 @@ abstract class PhpVishnuCore
     
     
     
-    /**
-     * Return the object contains the method
+    /*!
+     * \brief Return the object containing the method
      *
-     * @param string $className class name
-     * @param string $methodName Method name
+     * \param string $methodName Method name
      */
     public function parentObjectContainingMethod($methodName)
     {
@@ -389,11 +392,10 @@ abstract class PhpVishnuCore
     
     
     
-    /**
-     * Return the object contains the static method
+    /*!
+     * \brief Return the object containing the static method
      *
-     * @param string $className class name
-     * @param string $methodName Method name
+     * \param string $methodName Method name
      */
     static public function parentObjectContainingMethodStatic($methodName)
     {
@@ -418,10 +420,10 @@ abstract class PhpVishnuCore
 	}
     
     
-    /**
-     * Return the object contains the property
+    /*!
+     * \brief Return the object contains the property
      *
-     * @param string $propertyName Property name
+     * \param string $propertyName Property name
      */
     public function parentObjectContainingProperty($propertyName)
     {
@@ -443,7 +445,11 @@ abstract class PhpVishnuCore
 	}
 	
 	
-	
+    /*!
+     * \brief Return the child of the children
+     *
+     * \return The instance of the last child
+     */
 	public function childOfChildren()
 	{
 		$child = $this;
@@ -458,34 +464,34 @@ abstract class PhpVishnuCore
 
 
 	
-    /**
-     * Retrieve singleton instance
+    /*!
+     * \brief Retrieve singleton instance
      *
-     * @return self
+     * \return The singleton instance of a class
      */
     public static function getSingleton()
     {
 		if(!isset(self::$_t_singleton[get_called_class()]) || !self::$_t_singleton[get_called_class()])
-			throw new PhpVishnu_Exception('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is not a class singleton !');
+			throw new PhpVishnuException('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is not a class singleton !');
 			
         if (!isset(self::$_t_singleton_instance[get_called_class()]))
         {
-            throw new PhpVishnu_Exception('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is not created !');
+            throw new PhpVishnuException('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is not created !');
         }
         
         return self::$_t_singleton_instance[get_called_class()]->childOfChildren();
     }
     
     
-    /**
-     * Create the singleton instance
+    /*!
+     * \brief Create the singleton instance
      *
-     * @return void
+     * \return void
      */
     public static function createSingleton()
     {
 		if(!isset(self::$_t_singleton[get_called_class()]) || !self::$_t_singleton[get_called_class()])
-			throw new PhpVishnu_Exception('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is not a class singleton !');
+			throw new PhpVishnuException('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is not a class singleton !');
 			
         if (!isset(self::$_t_singleton_instance[get_called_class()]))
         {
@@ -508,18 +514,18 @@ abstract class PhpVishnuCore
 			eval('self::$_t_singleton_instance[get_called_class()] = new $className('.$paramClass.');');
         }
         else
-			throw new PhpVishnu_Exception('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is already created !');
+			throw new PhpVishnuException('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is already created !');
     }
 
-    /**
-     * Destroy the singleton instance
+    /*!
+     * \brief Destroy the singleton instance
      *
-     * @return void
+     * \return void
      */
     public static function destroySingleton()
     {
 		if(!isset(self::$_t_singleton[get_called_class()]) || !self::$_t_singleton[get_called_class()])
-			throw new PhpVishnu_Exception('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is not a class singleton !');
+			throw new PhpVishnuException('class '.get_class($this).' : Singleton::getSingleton() : Singleton "'.get_called_class().'" is not a class singleton !');
 			
         unset(self::$_t_singleton_instance[get_called_class()]);
     }
@@ -529,12 +535,12 @@ abstract class PhpVishnuCore
    
    
     
-    /**
-     * Define the list of parents
+    /*!
+     * \brief Define the list of parents for the class
      *
-     * @param array/string $array Parents name
+     * \param ArrayOrString $parentsName Parents name
      */
-    static public function defineParentClass($array)
+    static public function defineParentClass($parentsName)
     {
 		if(func_num_args() > 1)
 		{
@@ -542,32 +548,32 @@ abstract class PhpVishnuCore
 		}
 		else if(is_array($array))
 		{
-			self::$_t_extend[get_called_class()] = $array;
+			self::$_t_extend[get_called_class()] = $parentsName;
 		}
 		else
 		{
-			self::$_t_extend[get_called_class()] = array($array);
+			self::$_t_extend[get_called_class()] = array($parentsName);
 		}
 	}
     
-    /**
-     * Define the list of parents
+    /*!
+     * \brief Define if the class generate dynamicly the getters/setters or not
      *
-     * @param array/string $array Parents name
+     * \param bool $acceptGettersSetters The boolean value
      */
-    static public function defineGenerateGetterSetter($bool)
+    static public function defineGenerateGetterSetter($acceptGettersSetters)
     {
-		self::$_t_generate_gsetter[get_called_class()] = $bool;
+		self::$_t_generate_gsetter[get_called_class()] = $acceptGettersSetters;
 	}
     
-    /**
-     * Define the list of singletons
+    /*!
+     * \brief Define if the class is a singleton or not
      *
-     * @param array/string $array Parents name
+     * \param bool $isSingleton The boolean value
      */
-    static public function defineClassSingleton($bool)
+    static public function defineClassSingleton($isSingleton)
     {
-		self::$_t_singleton[get_called_class()] = $bool;
+		self::$_t_singleton[get_called_class()] = $isSingleton;
 	}
 }
 

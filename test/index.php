@@ -1,11 +1,8 @@
 <?php
-/**
- * PhpVishnu Framework
- *
+/*!
  * LICENSE
  * 
- *  (C) Copyright 2011 Guillaume Smaha
- *  This A.php file is part of PhpVishnu.
+ *  Copyright (c) 2005-2011 Guillaume Smaha.
  *
  *  PhpVishnu is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as
@@ -20,11 +17,19 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with PhpVishnu; see the file COPYING3. If not see
  *  <http://www.gnu.org/licenses/>.
+ * 
+ * \package 	PhpVishnu_Test
+ * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
+ * \license		http://www.gnu.org/licenses/ LGPL3
+ * \brief		PhpVishnu_Test is an using example of PhpVishnu.
+ */
+
+/*!
+ * \file index.php
+ * \brief This file is an example and a part of PhpVishnu.
  *
- * @category   PhpVishnu
- * @package    PhpVishnu
- * @copyright  Copyright (c) 2005-2011 PhpVishnu
- * @license    http://www.gnu.org/licenses/ LGPL3
+ * \copyright	(C) Copyright 2005-2011 Guillaume Smaha.
+ * \license		http://www.gnu.org/licenses/ LGPL3
  */
 
 set_include_path(get_include_path() . PATH_SEPARATOR . '../');
